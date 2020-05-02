@@ -1,8 +1,8 @@
 name: instashare
 description: Share easily and directly to Instagram.
-version: 0.0.2
-author:
-homepage:
+version: 0.0.3
+author: devs group <info@devs-group.com>
+homepage: https://devs-group.ch/
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
