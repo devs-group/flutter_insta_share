@@ -4,14 +4,14 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'instashare'
-  s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.version          = '0.0.3'
+  s.summary          = 'Share easily and directly to Instagram.'
   s.description      = <<-DESC
-A new flutter plugin project.
+  Share easily and directly to Instagram.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://devs-group.ch'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'devs group' => 'info@devs-group.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
