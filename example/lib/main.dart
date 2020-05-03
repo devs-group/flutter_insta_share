@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:instashare/instashare.dart';
+import 'package:instashare/instashare_status.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,11 +16,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   File _image;
+  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
+  Map<int, String> _errors = {
+    1: "There was an error writing your file.",
+    2: "There was an error saving to your album.",
+    3: "Instagram is not installed in you device. Please install it first before sharing.",
+    4: "We need access to your photo library otherwise you won`t be able to share your image."
+  };
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        key: _scaffoldkey,
         appBar: AppBar(
           title: const Text('Instashare'),
         ),
@@ -55,7 +63,7 @@ class _MyAppState extends State<MyApp> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: FlatButton(
-                      onPressed: () => _share(),
+                      onPressed: _image != null ? () => _share() : null,
                       child: Text('Share To Instagram'),
                       color: Colors.blue,
                       textColor: Colors.white,
@@ -78,7 +86,15 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void _share() {
-    Instashare.shareToFeedInstagram("image/*", _image.path);
+  void _share() async {
+    int result = await Instashare.shareToFeedInstagram("image/*", _image.path);
+    if (result != InstashareStatus.Done.index) {
+      _scaffoldkey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(_errors[result]),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

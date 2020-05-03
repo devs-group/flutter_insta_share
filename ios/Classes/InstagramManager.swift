@@ -15,10 +15,12 @@ class InstagramManager: NSObject, UIDocumentInteractionControllerDelegate {
     
     private let documentInteractionController = UIDocumentInteractionController()
     private let kInstagramURL = "instagram://app"
-    private let kUTI = "com.instagram.photo" //"com.instagram.exclusivegram"
     private let kfileNameExtension = "instagram.igo"//"instagram.igo"
-    private let kAlertViewTitle = "Error"
-    private let kAlertViewMessage = "Please install the Instagram application"
+    private let resultDone = 0
+    private let errorWritingFile = 1
+    private let errorSavingToPhotoAlbum = 2
+    private let errorInstagramNotInstalled = 3
+    private let errorAccessingPhotos = 4
     var result: FlutterResult
     
     init(result: @escaping FlutterResult) {
@@ -36,25 +38,23 @@ class InstagramManager: NSObject, UIDocumentInteractionControllerDelegate {
             do {
                 try imageInstagram.jpegData(compressionQuality: 1)?.write(to: URL(fileURLWithPath: jpgPath), options: .atomic)
             } catch {
-                self.result(1)
+                self.result(self.errorWritingFile)
                 return
             }
             
             PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
                 UIImageWriteToSavedPhotosAlbum(imageInstagram, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-            } else { self.result(2) } }
+            } else { self.result(self.errorSavingToPhotoAlbum) } }
         }
         else {
-            
-            // alert displayed when the instagram application is not available in the device
-            UIAlertView(title: kAlertViewTitle, message: kAlertViewMessage, delegate:nil, cancelButtonTitle:"Ok").show()
+            self.result(self.errorInstagramNotInstalled)
         }
     }
-    
+
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if error != nil {
-            self.result(3)
+            self.result(self.errorSavingToPhotoAlbum)
             return
         }
         let fetchOptions = PHFetchOptions()
@@ -70,9 +70,9 @@ class InstagramManager: NSObject, UIDocumentInteractionControllerDelegate {
                 } else {
                     UIApplication.shared.openURL(url)
                 }
-                self.result(0)
+                self.result(self.resultDone)
              }
-            else { self.result(4) }
+            else { self.result(self.errorAccessingPhotos) }
         }
     }
 }
