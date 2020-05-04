@@ -1,14 +1,88 @@
 # instashare
+Share easily and directly to Instagram.
 
-A new flutter plugin project.
+Inspired and adapted from [attilaroy](https://github.com/attilaroy/share-instagram-swift) (iOS) and [romatroskin](https://github.com/romatroskin/social_share_plugin) (Android)
 
-## Getting Started
+## Installation (Flutter)
+Add this to your `pubspec.yaml`
+```yaml
+dependencies:
+  ...
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+  instashare:
+    git:
+      url: https://github.com/devs-group/flutter_insta_share.git
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+  ...
+```
+
+## Android
+You don't need to configure anything for Android.
+
+## iOS
+Open your `info.plist` and add
+```xml
+<plist version="1.0">
+    <dict>
+        ...
+
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>instagram</string>
+        </array>
+        <key>NSCameraUsageDescription</key>
+        <string>This app needs to access your camera so you can take and add photos easily into the app.</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>This app needs access to your gallery so you can pick images or share to Instagram.</string>
+
+        ...
+    </dict>
+</plist>
+```
+
+> Mind that you can write anything inside the **NSCameraUsageDescription** and **NSPhotoLibraryUsageDescription** \<string\> block. This is just an example text.
+
+## Usage
+In your `.dart` file import the library with
+
+```dart
+import 'package:instashare/instashare.dart';
+```
+
+then call the method with (eg.)
+
+```dart
+Future<void> sharePost(File file) {
+    int result = await Instashare.shareToFeedInstagram("image/*", file.path);
+    if (result != InstashareStatus.Done.index) {
+        throw (result);
+    }
+}
+```
+
+as you can see i added multiple result integers as an return value (iOS only for now).
+
+You can check the result against those:
+
+```dart
+- InstashareStatus.Done (equals to 0)
+  // Successful sharing
+
+- InstashareStatus.WriteFileError (equals to 1)
+  // Writing the file did not work
+
+- InstashareStatus.WritePhotoAlbumError (equals to 2)
+  // Writing the file to Photo Album did not work
+
+- InstashareStatus.InstagramNotInstalledError (equals to 3)
+  // Instagram is not installed (or at least is not recognized)
+
+- InstashareStatus.AccessingPhotosError (equals to 4)
+  // User did not allow to access photo library
+```
+
+> Mind: Always use the `.index` function like `InstashareStatus.Done.index` to compare against the result.
+
+## Todo
+- Return result integer for Android
+- If possible remember the generated photo (iOS only) in the gallery and delete it when the user comes back into the app.
