@@ -11,4 +11,8 @@ class Instashare {
       'path': path,
     });
   }
+
+  static Future<void> openInstagramInStore() async {
+    _channel.invokeMethod('openInstagramInStore');
+  }
 }

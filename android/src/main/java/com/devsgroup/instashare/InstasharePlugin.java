@@ -60,6 +60,8 @@ public class InstasharePlugin implements FlutterPlugin, MethodCallHandler {
             } catch (PackageManager.NameNotFoundException e) {
                 result.success(errorInstagramNotInstalled);
             }
+        } else if (call.method.equals("openInstagramInStore")) {
+            openPlayStore();
         } else {
             result.notImplemented();
         }
@@ -74,10 +76,12 @@ public class InstasharePlugin implements FlutterPlugin, MethodCallHandler {
         try {
             final Uri playStoreUri = Uri.parse("market://details?id=" + InstasharePlugin.INSTAGRAM_PACKAGE_NAME);
             final Intent intent = new Intent(Intent.ACTION_VIEW, playStoreUri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
             final Uri playStoreUri = Uri.parse("https://play.google.com/store/apps/details?id=" + InstasharePlugin.INSTAGRAM_PACKAGE_NAME);
             final Intent intent = new Intent(Intent.ACTION_VIEW, playStoreUri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
     }

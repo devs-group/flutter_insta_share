@@ -47,7 +47,8 @@ class _MyAppState extends State<MyApp> {
                         _getImage().catchError((_) {
                           _scaffoldkey.currentState.showSnackBar(
                             SnackBar(
-                              content: Text("Sorry we can't access your gallery. Please allow access to the gallery first."),
+                              content: Text(
+                                  "Sorry we can't access your gallery. Please allow access to the gallery first."),
                               backgroundColor: Colors.red,
                             ),
                           );
@@ -100,7 +101,25 @@ class _MyAppState extends State<MyApp> {
     if (result != InstashareStatus.Done.index) {
       _scaffoldkey.currentState.showSnackBar(
         SnackBar(
-          content: Text(_errors[result]),
+          content: FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(_errors[result]),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: FlatButton(
+                    child: Text('Open in Store'),
+                    onPressed: () {
+                      Instashare.openInstagramInStore();
+                    },
+                    color: Colors.white,
+                    textColor: Colors.black,
+                  ),
+                )
+              ],
+            ),
+          ),
           backgroundColor: Colors.red,
         ),
       );
