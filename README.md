@@ -83,5 +83,12 @@ You can check the result against those:
 
 > Mind: Always use the `.index` function like `InstashareStatus.Done.index` to compare against the result.
 
+## Example
+You can also simply use my example app and check out the code.
+
+1. Open your emulator or connect your device
+2. `cd example`
+3. `flutter run -t lib/main.dart --debug`
+
 ## Todo
 - If possible remember the generated photo (iOS only) in the gallery and delete it when the user comes back into the app.
