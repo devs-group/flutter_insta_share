@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   Map<int, String> _errors = {
     1: "There was an error writing your file.",
     2: "There was an error saving to your album.",
-    3: "Instagram is not installed in you device. Please install it first before sharing.",
+    3: "Instagram is not installed on your device. Please install it first before sharing.",
     4: "We need access to your photo library otherwise you won`t be able to share your image."
   };
 
@@ -43,7 +43,16 @@ class _MyAppState extends State<MyApp> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: FlatButton(
-                      onPressed: () => _getImage(),
+                      onPressed: () {
+                        _getImage().catchError((_) {
+                          _scaffoldkey.currentState.showSnackBar(
+                            SnackBar(
+                              content: Text("Sorry we can't access your gallery. Please allow access to the gallery first."),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        });
+                      },
                       child: Text('Pick Photo'),
                       color: Colors.blue,
                       textColor: Colors.white,

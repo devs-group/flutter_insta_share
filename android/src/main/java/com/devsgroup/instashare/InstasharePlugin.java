@@ -24,6 +24,12 @@ public class InstasharePlugin implements FlutterPlugin, MethodCallHandler {
     private MethodChannel channel;
     private Context context;
 
+    private int resultDone = 0;
+    private int errorWritingFile = 1; // Unused here
+    private int errorSavingToPhotoAlbum = 2; // Unused here
+    private int errorInstagramNotInstalled = 3;
+    private int errorAccessingPhotos = 4; // Unused here
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         setupChannels(flutterPluginBinding.getFlutterEngine().getDartExecutor(), flutterPluginBinding.getApplicationContext());
@@ -50,10 +56,10 @@ public class InstasharePlugin implements FlutterPlugin, MethodCallHandler {
                 StrictMode.setVmPolicy(builder.build());
                 pm.getPackageInfo(INSTAGRAM_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
                 instagramShare(call.<String>argument("type"), call.<String>argument("path"));
+                result.success(resultDone);
             } catch (PackageManager.NameNotFoundException e) {
-                openPlayStore();
+                result.success(errorInstagramNotInstalled);
             }
-            result.success(null);
         } else {
             result.notImplemented();
         }

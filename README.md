@@ -60,7 +60,7 @@ Future<void> sharePost(File file) {
 }
 ```
 
-as you can see i added multiple result integers as an return value (iOS only for now).
+as you can see i added multiple result integers as an return value.
 
 You can check the result against those:
 
@@ -69,20 +69,19 @@ You can check the result against those:
   // Successful sharing
 
 - InstashareStatus.WriteFileError (equals to 1)
-  // Writing the file did not work
+  // Writing the file did not work (iOS only)
 
 - InstashareStatus.WritePhotoAlbumError (equals to 2)
-  // Writing the file to Photo Album did not work
+  // Writing the file to Photo Album did not work (iOS only)
 
 - InstashareStatus.InstagramNotInstalledError (equals to 3)
   // Instagram is not installed (or at least is not recognized)
 
 - InstashareStatus.AccessingPhotosError (equals to 4)
-  // User did not allow to access photo library
+  // User did not allow to access photo library (iOS only)
 ```
 
 > Mind: Always use the `.index` function like `InstashareStatus.Done.index` to compare against the result.
 
 ## Todo
-- Return result integer for Android
 - If possible remember the generated photo (iOS only) in the gallery and delete it when the user comes back into the app.
