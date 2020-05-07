@@ -17,9 +17,13 @@ dependencies:
 ```
 
 ## Android
+![](instashare_android_small.gif)
+
 You don't need to configure anything for Android.
 
 ## iOS
+![](instashare_ios.gif)
+
 Open your `info.plist` and add
 ```xml
 <plist version="1.0">
