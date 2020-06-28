@@ -1,30 +1,21 @@
 # instashare
+
 Share easily and directly to Instagram.
 
 Inspired and adapted from [attilaroy](https://github.com/attilaroy/share-instagram-swift) (iOS) and [romatroskin](https://github.com/romatroskin/social_share_plugin) (Android)
 
-## Installation (Flutter)
-Add this to your `pubspec.yaml`
-```yaml
-dependencies:
-  ...
-
-  instashare:
-    git:
-      url: https://github.com/devs-group/flutter_insta_share.git
-
-  ...
-```
-
 ## Android
+
 ![](instashare_android_small.gif)
 
 You don't need to configure anything for Android.
 
 ## iOS
+
 ![](instashare_ios.gif)
 
 Open your `info.plist` and add
+
 ```xml
 <plist version="1.0">
     <dict>
@@ -47,6 +38,7 @@ Open your `info.plist` and add
 > Mind that you can write anything inside the **NSCameraUsageDescription** and **NSPhotoLibraryUsageDescription** \<string\> block. This is just an example text.
 
 ## Usage
+
 In your `.dart` file import the library with
 
 ```dart
@@ -88,6 +80,7 @@ You can check the result against those:
 > Mind: Always use the `.index` function like `InstashareStatus.Done.index` to compare against the result.
 
 ## Example
+
 You can also simply use my example app and check out the code.
 
 1. Open your emulator or connect your device
@@ -95,4 +88,5 @@ You can also simply use my example app and check out the code.
 3. `flutter run -t lib/main.dart --debug`
 
 ## Todo
+
 - If possible remember the generated photo (iOS only) in the gallery and delete it when the user comes back into the app.

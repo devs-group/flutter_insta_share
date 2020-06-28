@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'instashare'
-  s.version          = '0.0.6'
+  s.version          = '0.0.7'
   s.summary          = 'Share easily and directly to Instagram.'
   s.description      = <<-DESC
   Share easily and directly to Instagram.
