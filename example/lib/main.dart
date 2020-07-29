@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instashare/instashare.dart';
 import 'package:instashare/instashare_status.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -89,10 +90,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future _getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    Directory dir = await getExternalStorageDirectory();
+    dir.createSync();
+    File endFile = File("${dir.path}/shareimage.jpg");
+    endFile.createSync();
+    endFile.writeAsBytesSync(image.readAsBytesSync());
 
     setState(() {
-      _image = image;
+      _image = endFile;
     });
   }
 
